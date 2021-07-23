@@ -49,7 +49,7 @@ export const LoginScreen = () => {
       <>
         <h3 className="auth__title mb-5">Login</h3>
         {msError && (
-          <div className="auth__alert-error">{msError.message || msError}</div>
+          <div className="auth__alert-error">{msError.message ? msError.message : msError}</div>
         )}
 
         <form onSubmit={handleSubmit}>
