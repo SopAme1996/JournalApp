@@ -7,10 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setError, removeError } from '../../actions/ui';
 
 
+
 export const RegisterScreen = () => {
 
   const dispatch = useDispatch();
-  const { msError } = useSelector( state => state.ui );
+  const { msError } = useSelector(state => state.ui);
 
   const [formValues, handleInputChange] = useForm({
     name: 'Luis Enrique Solis Puc',

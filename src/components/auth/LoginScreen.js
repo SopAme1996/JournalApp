@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { useDispatch, useSelector } from "react-redux";
 import { startLoginEmailPaasword, startGoogleLogin } from '../../asincrono/auth';
+import validator from "validator";
+import { setError, removeError } from "../../actions/ui";
 
 
 export const LoginScreen = () => {
 
   const dispatch = useDispatch();
-  const { loading } = useSelector(state => state.ui);
+  const { loading, msError } = useSelector(state => state.ui);
 
   const [ formValues, handleInputChange] = useForm({
     email: 'sop199642@gmail.com',
@@ -19,7 +21,9 @@ export const LoginScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-     dispatch(startLoginEmailPaasword(email, password));
+    if (isValid()) {
+      dispatch(startLoginEmailPaasword(email, password));
+    }
   }
 
   const handleGoogleSubmit = (e) => {
@@ -27,14 +31,53 @@ export const LoginScreen = () => {
     dispatch(startGoogleLogin());
   }
 
+  const isValid = () => {
+    if (!validator.isEmail(email) || validator.isEmpty(email)) {
+      dispatch(setError("Email is required"));
+      return false;
+    } else if (validator.isEmpty(password) || password.trim().length < 5) {
+      dispatch(
+        setError("Password should be at least 6 characters and match other")
+      );
+      return false;
+    }
+    dispatch(removeError());
+    return true;
+  }
+
     return (
       <>
         <h3 className="auth__title mb-5">Login</h3>
-        <form onSubmit={handleSubmit}>
-          <input type="email" placeholder="Email" name="email" className='auth__input' autoComplete='off' value={ email } onChange={handleInputChange}/>
-          <input type="password" placeholder="Password" name="password" className='auth__input' value={ password } onChange={handleInputChange}/>
+        {msError && (
+          <div className="auth__alert-error">{msError.message || msError}</div>
+        )}
 
-          <button type="submit" className="btn btn-primary btn-block" disabled={loading}>Login</button>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            className="auth__input"
+            autoComplete="off"
+            value={email}
+            onChange={handleInputChange}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            className="auth__input"
+            value={password}
+            onChange={handleInputChange}
+          />
+
+          <button
+            type="submit"
+            className="btn btn-primary btn-block"
+            disabled={loading}
+          >
+            Login
+          </button>
 
           <div className="auth__social-networks">
             <p>Login with social netwoks</p>
@@ -51,11 +94,11 @@ export const LoginScreen = () => {
                 <b>Sign in with google</b>
               </p>
             </div>
-                </div>
+          </div>
 
-                <Link to="/auth/register" className="link">
-                    Create a new accout
-                </Link>
+          <Link to="/auth/register" className="link">
+            Create a new accout
+          </Link>
         </form>
       </>
     );

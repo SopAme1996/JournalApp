@@ -2,24 +2,14 @@ import React from 'react'
 
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
+
 import { AuthRouter } from './AuthRouter';
 import { JournalScreen } from '../journal/JournalScreen';
 
 
 export const AppRouter = () => {
     return (
-      <Router>
-
-        {/* <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/"></Link>
-              </li>
-            </ul>
-          </nav>
-        </div> */}
-
+      <Router >
         <Switch>
           <Route path="/auth">
             <AuthRouter />
@@ -29,8 +19,7 @@ export const AppRouter = () => {
             <JournalScreen />
           </Route>
 
-          <Redirect to = '/auth/login'/>
-
+          <Redirect to="/auth/login" />
         </Switch>
       </Router>
     );
