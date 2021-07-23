@@ -1,5 +1,5 @@
 
-import { msgtErrorTypes } from '../types/authTypes';
+import { msgtErrorTypes, loadingTypes } from '../types/authTypes';
 
 export const setError = (err) => {
     return {
@@ -11,5 +11,18 @@ export const setError = (err) => {
 export const removeError = () => {
     return {
         type: msgtErrorTypes.uiRemoveError,
+    }
+}
+
+export const startLoading = () => {
+    return {
+        type: loadingTypes.uiStartLoading,
+        payload: true
+    }
+}
+
+export const finishLoading = () => {
+    return {
+        type: loadingTypes.uiFinishLoading,
     }
 }

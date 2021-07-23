@@ -1,9 +1,17 @@
 import { login } from "../actions/auth";
+import { startLoading, finishLoading } from "../actions/ui";
 import { firebase, googleAuthProivder } from '../firebase/firebase-config';
 
 export const startLoginEmailPaasword = (email, password) => {
   return (dispatch) => {
-    
+    dispatch(startLoading());
+    firebase.auth().signInWithEmailAndPassword(email, password).then(({user}) => {
+      dispatch(login(user.uid, user.displayName));
+      dispatch(finishLoading());
+    }).catch(err => {
+      console.log(err);
+      dispatch(finishLoading());
+   })
   };
 };
 
