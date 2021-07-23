@@ -1,4 +1,4 @@
-import { login } from "../actions/auth";
+import { login, logout } from "../actions/auth";
 import { startLoading, finishLoading, setError } from "../actions/ui";
 import { firebase, googleAuthProivder } from '../firebase/firebase-config';
 
@@ -39,3 +39,10 @@ export const startGoogleLogin = () => {
 
     }
 }
+
+export const startLogout = () => {
+  return async (dispatch) => {
+    await firebase.auth().signOut();
+    dispatch(logout());
+  };
+};

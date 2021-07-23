@@ -10,3 +10,11 @@ export const login = (uid, name) => {
       },
     };
 }
+
+
+
+export const logout = () => {
+  return {
+    type: authTypes.logout,
+  }
+}
