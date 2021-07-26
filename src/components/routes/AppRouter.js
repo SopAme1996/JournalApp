@@ -9,6 +9,8 @@ import { PrivateRouter } from './PrivateRouter';
 import { JournalScreen } from '../journal/JournalScreen';
 import { firebase } from '../../firebase/firebase-config';
 import { login } from '../../actions/auth';
+import { loadNotes } from '../../helpers/loadNotes';
+import { allNotes } from '../../actions/notes';
 
 
 export const AppRouter = () => {
@@ -19,10 +21,12 @@ export const AppRouter = () => {
   const [isLoggeIn, setisLoggeIn] = useState(false)
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(async(user) => {
       if (user?.uid) {
         dispatch(login(user.uid, user.displayName));
         setisLoggeIn(true);
+        const notas = await loadNotes(user.uid);
+        dispatch(allNotes(notas));
       } else {
         setisLoggeIn(false);
       }
@@ -33,29 +37,29 @@ export const AppRouter = () => {
 
   if (checking) {
     return (
-      <h1>Espere....</h1>
+      <h1>Please, wait....</h1>
     )
   }
 
-    return (
-      <Router>
-        <Switch>
-          <PublicRoute
-            path="/auth"
-            component={AuthRouter}
-            isAuthenticated={isLoggeIn}
-          />
+  return (
+    <Router>
+      <Switch>
+        <PublicRoute
+          path="/auth"
+          component={AuthRouter}
+          isAuthenticated={isLoggeIn}
+        />
 
-          <PrivateRouter
-            exact
-            path="/"
-            component={JournalScreen}
-            isAuthenticated={isLoggeIn}
-          />
+        <PrivateRouter
+          exact
+          path="/"
+          component={JournalScreen}
+          isAuthenticated={isLoggeIn}
+        />
 
-          <Redirect to="/auth/login" />
-        </Switch>
-      </Router>
-    );
+        <Redirect to="/auth/login" />
+      </Switch>
+    </Router>
+  );
 }
 
