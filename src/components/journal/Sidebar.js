@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { JournalEntries } from './JournalEntries';
 import { startLogout } from '../../asincrono/auth';
 import { startNewNote } from '../../asincrono//notes';
+import { btnMenu } from '../../helpers/btnMenu';
 
 export const Sidebar = () => {
     const dispatch = useDispatch();
@@ -15,6 +16,9 @@ export const Sidebar = () => {
 
     const handleAddNew = () => {
         dispatch(startNewNote());
+        const menu = document.getElementById('journal');
+        menu.className = 'journal__sidebar';
+        btnMenu();
     }
 
     return (

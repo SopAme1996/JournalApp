@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { noteActive } from '../../actions/notes';
 import moment from 'moment';
+import { btnMenu } from '../../helpers/btnMenu';
 
 
 export const JournalEntry = ({ body, date, id, title, url }) => {
@@ -11,6 +12,9 @@ export const JournalEntry = ({ body, date, id, title, url }) => {
 
   const handleSelectedNote = () => {
     dispatch(noteActive(id, { title, body, date, url }));
+    const menu = document.getElementById('journal');
+    menu.className = 'journal__sidebar';
+    btnMenu();
   }
 
   return (
