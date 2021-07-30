@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { startLoginEmailPaasword, startGoogleLogin } from '../../asincrono/auth';
 import validator from "validator";
 import { setError, removeError } from "../../actions/ui";
+import { viewPassword } from '../../helpers/viewPaasword';
 
 
 export const LoginScreen = () => {
@@ -12,9 +13,9 @@ export const LoginScreen = () => {
   const dispatch = useDispatch();
   const { loading, msError } = useSelector(state => state.ui);
 
-  const [ formValues, handleInputChange] = useForm({
-    email: 'sop199642@gmail.com',
-    password: 'america1996',
+  const [formValues, handleInputChange] = useForm({
+    email: '',
+    password: '',
   });
 
   const { email, password } = formValues;
@@ -31,6 +32,10 @@ export const LoginScreen = () => {
     dispatch(startGoogleLogin());
   }
 
+  const handleViewPassword = () => {
+    viewPassword();
+  }
+
   const isValid = () => {
     if (!validator.isEmail(email) || validator.isEmpty(email)) {
       dispatch(setError("Email is required"));
@@ -45,61 +50,69 @@ export const LoginScreen = () => {
     return true;
   }
 
-    return (
-      <>
-        <h3 className="auth__title mb-5">Login</h3>
-        {msError && (
-          <div className="auth__alert-error">{msError.message ? msError.message : msError}</div>
-        )}
+  return (
+    <>
+      <h3 className="auth__title mb-5">Login</h3>
+      {msError && (
+        <div className="auth__alert-error">{msError.message ? msError.message : msError}</div>
+      )}
 
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            className="auth__input"
-            autoComplete="off"
-            value={email}
-            onChange={handleInputChange}
-          />
+      <form onSubmit={handleSubmit} className='animate__animated animate__fadeIn animate__faster'>
+        <input
+          type="email"
+          placeholder="Email"
+          name="email"
+          className="auth__input"
+          autoComplete="off"
+          value={email}
+          onChange={handleInputChange}
+        />
+
+        <div className="auth__passwordView">
           <input
             type="password"
             placeholder="Password"
             name="password"
+            id='password'
             className="auth__input"
             value={password}
             onChange={handleInputChange}
           />
 
-          <button
-            type="submit"
-            className="btn btn-primary btn-block"
-            disabled={loading}
-          >
-            Login
-          </button>
+          <i className="far fa-eye-slash" onClick={handleViewPassword} id="viewEye"></i>
+          <input type="checkbox" hidden name='viewPassword' id='viewpassword' />
+        </div>
 
-          <div className="auth__social-networks">
-            <p>Login with social netwoks</p>
 
-            <div className="google-btn" onClick={handleGoogleSubmit}>
-              <div className="google-icon-wrapper">
-                <img
-                  className="google-icon"
-                  src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-                  alt="google button"
-                />
-              </div>
-              <p className="btn-text">
-                <b>Sign in with google</b>
-              </p>
+        <button
+          type="submit"
+          className="btn btn-primary btn-block"
+          disabled={loading}
+        >
+          Login
+        </button>
+
+        <div className="auth__social-networks">
+          <p>Login with social netwoks</p>
+
+          <div className="google-btn" onClick={handleGoogleSubmit}>
+            <div className="google-icon-wrapper">
+              <img
+                className="google-icon"
+                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                alt="google button"
+              />
             </div>
+            <p className="btn-text">
+              <b>Sign in with google</b>
+            </p>
           </div>
+        </div>
 
-          <Link to="/auth/register" className="link">
-            Create a new accout
-          </Link>
-        </form>
-      </>
-    );
+        <Link to="/auth/register" className="link">
+          Create a new accout
+        </Link>
+      </form>
+    </>
+  );
 }

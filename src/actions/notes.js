@@ -44,3 +44,13 @@ export const notesLogout = () => {
         type: noteTypes.notesLogoutCleaning,
     }
 }
+
+export const addNewNote = (id, note) => {
+    return {
+        type: noteTypes.addNote,
+        payload: {
+            id,
+            ...note,
+    }
+    }
+}

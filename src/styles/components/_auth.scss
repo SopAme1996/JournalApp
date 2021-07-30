@@ -53,3 +53,12 @@
     margin-bottom: 10px;
     padding: 5px;
 }
+
+.auth__passwordView{
+    position: relative;
+}
+.auth__passwordView i{
+    position: absolute;
+    right: 0px;
+    cursor: pointer;
+}

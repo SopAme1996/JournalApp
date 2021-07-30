@@ -14,10 +14,10 @@ export const RegisterScreen = () => {
   const { msError } = useSelector(state => state.ui);
 
   const [formValues, handleInputChange] = useForm({
-    name: 'Luis Enrique Solis Puc',
-    email: 'sop199642@gmail.com',
-    password: 'america1996',
-    password2: 'america1996',
+    name: '',
+    email: '',
+    password: '',
+    password2: '',
   });
 
   const { name, email, password, password2 } = formValues;
@@ -43,61 +43,61 @@ export const RegisterScreen = () => {
     }
 
     dispatch(removeError());
-      return true;
+    return true;
   }
 
-    return (
-      <>
-        <h3 className="auth__title mb-5">Register</h3>
-        <form onSubmit={handleRegisterSubmit}>
-          {
-            msError && <div className="auth__alert-error">{ msError }</div>
-          }
-          <input
-            type="text"
-            placeholder="Nombre"
-            name="name"
-            className="auth__input"
-            autoComplete="off"
-            value={name}
-            onChange={handleInputChange}
-          />
+  return (
+    <>
+      <h3 className="auth__title mb-5">Register</h3>
+      <form onSubmit={handleRegisterSubmit} className="animate__animated animate__fadeIn animate__faster">
+        {
+          msError && <div className="auth__alert-error">{msError}</div>
+        }
+        <input
+          type="text"
+          placeholder="Nombre"
+          name="name"
+          className="auth__input"
+          autoComplete="off"
+          value={name}
+          onChange={handleInputChange}
+        />
 
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            className="auth__input"
-            autoComplete="off"
-            value={email}
-            onChange={handleInputChange}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            className="auth__input"
-            value={password}
-            onChange={handleInputChange}
-          />
+        <input
+          type="email"
+          placeholder="Email"
+          name="email"
+          className="auth__input"
+          autoComplete="off"
+          value={email}
+          onChange={handleInputChange}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          className="auth__input"
+          value={password}
+          onChange={handleInputChange}
+        />
 
-          <input
-            type="password"
-            placeholder="Confirm password"
-            name="password2"
-            className="auth__input"
-            value={password2}
-            onChange={handleInputChange}
-          />
+        <input
+          type="password"
+          placeholder="Confirm password"
+          name="password2"
+          className="auth__input"
+          value={password2}
+          onChange={handleInputChange}
+        />
 
-          <button type="submit" className="btn btn-primary btn-block mb-5">
-            Login
-          </button>
+        <button type="submit" className="btn btn-primary btn-block mb-5">
+          Login
+        </button>
 
-          <Link to="/auth/login" className="link">
-            Already registered?
-          </Link>
-        </form>
-      </>
-    );
+        <Link to="/auth/login" className="link">
+          Already registered?
+        </Link>
+      </form>
+    </>
+  );
 }
