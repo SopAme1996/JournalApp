@@ -17,3 +17,30 @@ export const allNotes = (notes) => {
         payload: notes
     }
 }
+
+export const refreshNotes = (id, note) => {
+    return {
+        type: noteTypes.updateNote,
+        payload: {
+            id,
+            note: {
+                id,
+                ...note
+            }
+        }
+    }
+}
+
+
+export const deleteNote = (note_id) => {
+    return {
+        type: noteTypes.deleteNote,
+        payload: note_id
+    }
+}
+
+export const notesLogout = () => {
+    return {
+        type: noteTypes.notesLogoutCleaning,
+    }
+}

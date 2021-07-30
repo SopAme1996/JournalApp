@@ -9,9 +9,7 @@ import { PrivateRouter } from './PrivateRouter';
 import { JournalScreen } from '../journal/JournalScreen';
 import { firebase } from '../../firebase/firebase-config';
 import { login } from '../../actions/auth';
-import { loadNotes } from '../../helpers/loadNotes';
-import { allNotes } from '../../actions/notes';
-
+import { startLoadingNotes } from '../../asincrono/notes';
 
 export const AppRouter = () => {
 
@@ -21,12 +19,11 @@ export const AppRouter = () => {
   const [isLoggeIn, setisLoggeIn] = useState(false)
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(async(user) => {
+    firebase.auth().onAuthStateChanged(async (user) => {
       if (user?.uid) {
         dispatch(login(user.uid, user.displayName));
         setisLoggeIn(true);
-        const notas = await loadNotes(user.uid);
-        dispatch(allNotes(notas));
+        dispatch(startLoadingNotes());
       } else {
         setisLoggeIn(false);
       }
