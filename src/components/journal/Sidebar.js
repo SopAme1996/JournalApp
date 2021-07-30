@@ -18,14 +18,14 @@ export const Sidebar = () => {
     }
 
     return (
-        <aside className="journal__sidebar">
-            <div className="journal__sidebar-navbar">
+        <aside className="journal__sidebar" id='journal'>
+            <div className="journal__sidebar-navbar" >
                 <h3 className="mt-5">
                     <i className="far fa-moon"></i>
                     <span> {name} </span>
                 </h3>
 
-                <button className="btn" onClick={handleLogout}>
+                <button className="btn mt-5 btn-logOut" onClick={handleLogout}>
                     Logout
                 </button>
             </div>

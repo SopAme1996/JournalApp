@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startSaveNotes, startUploading } from '../../asincrono/notes'
+import { fechaActualText } from '../../helpers/fechaActual';
 
 export const NotesAppBar = () => {
     const dispatch = useDispatch();
@@ -24,8 +25,8 @@ export const NotesAppBar = () => {
 
     return (
         <div className="notes__appbar">
-            <span>28 de agosto 2020</span>
-            <input id='fileSelector' type="file" style={{ display: 'none' }} onChange={handleFileChange} name='file'/>
+            <span>{fechaActualText()}</span>
+            <input id='fileSelector' type="file" style={{ display: 'none' }} onChange={handleFileChange} name='file' />
             <div>
                 <button className="btn" onClick={handlePictureClick}>
                     Picture

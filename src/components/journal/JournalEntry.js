@@ -15,14 +15,16 @@ export const JournalEntry = ({ body, date, id, title, url }) => {
 
   return (
     <div className="journal__entry animate__animated animate__fadeIn animate__faster" onClick={handleSelectedNote}>
-      <div
+      <figure
         className="journal__entry-picture"
         style={{
           backgroundSize: "cover",
           backgroundImage:
             `url(${url})`,
+          backgroundPosition: "center"
         }}
-      ></div>
+      >
+      </figure>
       <div className="journal__entry-body">
         <p className="journal__entry-title">{title}</p>
         <p className="journal__entry-content">
