@@ -2,12 +2,20 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startSaveNotes, startUploading } from '../../asincrono/notes'
 import { fechaActualText } from '../../helpers/fechaActual';
+import Swal from 'sweetalert2';
 
 export const NotesAppBar = () => {
     const dispatch = useDispatch();
     const { active } = useSelector(state => state.notes);
 
     const handleSave = () => {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+            timer: 1500
+        })
         dispatch(startSaveNotes(active));
     }
 
@@ -19,6 +27,13 @@ export const NotesAppBar = () => {
         const file = e.target.files[0];
 
         if (file) {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500
+            })
             dispatch(startUploading(file));
         }
     }

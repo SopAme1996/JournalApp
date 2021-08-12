@@ -5,6 +5,7 @@ import { fileUpload } from '../helpers/fileUpload';
 
 
 
+
 export const startNewNote = () => {
     return async (dispatch, getState) => {
         const uid = getState().auth.uid;

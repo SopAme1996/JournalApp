@@ -5,6 +5,7 @@ import { NotesAppBar } from './NotesAppBar'
 import { useForm } from '../../hooks/useForm';
 import { noteActive } from '../../actions/notes';
 import { startDelete } from '../../asincrono/notes';
+import Swal from 'sweetalert2';
 
 export const NoteScreen = () => {
     const dispatch = useDispatch();
@@ -26,7 +27,24 @@ export const NoteScreen = () => {
     }, [formValue, dispatch])
 
     const handleDelete = () => {
-        dispatch(startDelete(formValue.id));
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(startDelete(formValue.id));
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+        })
     }
 
 
