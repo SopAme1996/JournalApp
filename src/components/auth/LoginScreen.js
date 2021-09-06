@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { useDispatch, useSelector } from "react-redux";
@@ -12,23 +12,12 @@ export const LoginScreen = () => {
 
   const dispatch = useDispatch();
   const { loading, msError } = useSelector(state => state.ui);
-  const code = window.location.search;
+
 
   const [formValues, handleInputChange] = useForm({
     email: '',
     password: '',
   });
-
-  useEffect(() => {
-    if (code) {
-      const urlParams = new URLSearchParams(code);
-      //Accedemos a los valores
-      const dataCode = urlParams.get('code');
-      const token = getToken(dataCode);
-      console.log(token);
-    }
-  }, [code])
-
   const { email, password } = formValues;
 
   const handleSubmit = (e) => {
@@ -47,14 +36,7 @@ export const LoginScreen = () => {
     viewPassword();
   }
 
-  const getToken = (code) => {
-    fetch(`https://www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&code=${code}&redirect_uri=https://journalapp42.herokuapp.com/auth/login&client_id=788y0vfv7lhm7n&client_secret=IVaRH1Dqrypoo5WR`, {
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      method: 'POST'
-    }).then((response) => {
-      console.log(response);
-    })
-  }
+
 
   const isValid = () => {
     if (!validator.isEmail(email) || validator.isEmpty(email)) {
@@ -127,14 +109,6 @@ export const LoginScreen = () => {
               <b>Sign in with google</b>
             </p>
           </div>
-
-          <div className="w-100 mb-3 d-flex justify-content-center">
-            <a className="btn btn-block btn-social btn-linkedin w-50"
-              href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=788y0vfv7lhm7n&redirect_uri=https://journalapp42.herokuapp.com/auth/login&state=foobar&scope=r_liteprofile%20r_emailaddress">
-              <span className="fa fa-linkedin"></span> Sign in with Linkedin
-            </a>
-          </div>
-
         </div>
 
         <Link to="/auth/register" className="link">
